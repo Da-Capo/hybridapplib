@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html>
-
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -153,7 +152,7 @@
 			return mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER);
 			//          console.log(mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER));
 		}
-		
+
 		function open_bluetooth() {
 			var main = plus.android.runtimeMainActivity();
 			var BluetoothAdapter = plus.android.importClass("android.bluetooth.BluetoothAdapter");
@@ -172,14 +171,14 @@
 			var filter = new IntentFilter();
 			filter.addAction(BAdapter.ACTION_STATE_CHANGED); //监听蓝牙开关
 			main.registerReceiver(receiver, filter); //注册监听
-	
+
 			if(!BAdapter.isEnabled()) {
 				BAdapter.enable(); //启动蓝牙
 			} else {
 				BAdapter.disable();
 			}
 		}
-	
+
 		function bluetooth_list() {
 			var main = plus.android.runtimeMainActivity();
 			var Context = plus.android.importClass("android.content.Context");
@@ -188,7 +187,7 @@
 			//              var BluetoothManager = plus.android.importClass("android.bluetooth.BluetoothManager");
 			//              var bluetoothManager = main.getSystemService(Context.BLUETOOTH_SERVICE)
 			var BAdapter = new BluetoothAdapter.getDefaultAdapter();
-	
+
 			//              var mBluetoothAdapter = new bluetoothManager.getAdapter();
 			var mLeScanCallback = plus.android.implements("android.bluetooth.BluetoothAdapter$LeScanCallback", {
 				'onLeScan': function(device, rssi, scanRecord) {
@@ -212,22 +211,22 @@
 						// 转换为16进制
 						var uuidBytes = scanRecord.slice(startByte + 4, 32);
 						var hexString = Bytes2Str(uuidBytes);
-	
+
 						// ibeacon的UUID值
 						var uuid = hexString.substring(0, 8) + "-" +
 							hexString.substring(8, 12) + "-" +
 							hexString.substring(12, 16) + "-" +
 							hexString.substring(16, 20) + "-" +
 							hexString.substring(20, 32);
-	
+
 						// ibeacon的Major值
 						var major = (scanRecord[startByte + 20] & 0xff) * 0x100 +
 							(scanRecord[startByte + 21] & 0xff);
-	
+
 						// ibeacon的Minor值
 						var minor = (scanRecord[startByte + 22] & 0xff) * 0x100 +
 							(scanRecord[startByte + 23] & 0xff);
-	
+
 						var ibeaconName = device.getName();
 						var mac = device.getAddress();
 						var txPower = (scanRecord[startByte + 24]);
@@ -237,12 +236,12 @@
 							minor + "\nTxPower：" + txPower + "\nrssi：" + rssi +
 							"\nBLE " + "distance：" + calculateAccuracy(txPower, rssi);
 					}
-	
+
 					//                      console.log(JSON.stringify(device));
 				}
 			});
 			BAdapter.startLeScan(mLeScanCallback);
-	
+
 			function Bytes2Str(bytes) {
 				var hexArray = "0123456789ABCDEF".split("");
 				var hexChars = new Array();
@@ -253,12 +252,12 @@
 				}
 				return hexChars.join("");
 			}
-	
+
 			function calculateAccuracy(txPower, rssi) {
 				if(rssi == 0) {
 					return -1.0; // if we cannot determine accuracy, return -1.
 				}
-	
+
 				var ratio = rssi * 1.0 / txPower;
 				if(ratio < 1.0) {
 					return Math.pow(ratio, 10);
