@@ -1,135 +1,19 @@
 <!DOCTYPE HTML>
 <html>
+
 	<head>
-		<meta charset="utf-8"/>
-		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-		<meta name="HandheldFriendly" content="true"/>
-		<meta name="MobileOptimized" content="320"/>
-		<title>Hello H5+</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="HandheldFriendly" content="true" />
+		<meta name="MobileOptimized" content="320" />
+		<title>Nativejs</title>
 		<script type="text/javascript" src="../js/common.js"></script>
 		<script type="text/javascript">
-// 保存iOS平台导入的类对象
-var UIAlertView=null;
-// 保存Android导入对象和全局环境对象
-var AlertDialog=null,mainActivity=null;
-// H5 plus事件处理
-function plusReady(){
-	switch ( plus.os.name ) {
-		case "Android":
-		// 程序全局环境对象
-		mainActivity = plus.android.runtimeMainActivity();
-		// 导入AlertDialog类
-		AlertDialog = plus.android.importClass("android.app.AlertDialog");
-		break;
-		case "iOS":
-		// 导入UIAlertView类
-		UIAlertView = plus.ios.importClass("UIAlertView");
-		break;
-		default:
-		break;
-	}
-}
-if(window.plus){
-	plusReady();
-}else{
-	document.addEventListener("plusready",plusReady,false);
-}
-
-/**
- * 在iOS平台通过NJS显示系统提示框
- */
-function njsAlertForiOS(){
-/*
- * Objective-C 代码
- * 
-　　// 创建UIAlertView类的实例对象
-　　UIAlertView *view = [UIAlertView alloc];
-　　// 设置提示对话上的内容
-　　[view initWithTitle:@"自定义标题"       // 提示框标题
-　　    message:@"使用NJS的原生弹出框，可自定义弹出框的标题、按钮"  // 提示框上显示的内容
-　　    delegate:nil                // 点击提示框后的通知代理对象，nil类似js的null，意为不设置
-　　    cancelButtonTitle:@"确定(或者其他字符)"     // 提示框上取消按钮的文字
-　　    otherButtonTitles:nil];        // 提示框上其它按钮的文字，设置为nil表示不显示
-　　// 调用show方法显示提示对话框，在OC中使用[]语法调用对象的方法
-　　[view show];
- */
-
-	// 创建UIAlertView类的实例对象
-	var view = new UIAlertView();
-	// 设置提示对话上的内容
-	view.initWithTitlemessagedelegatecancelButtonTitleotherButtonTitles("自定义标题" // 提示框标题
-		, "使用NJS的原生弹出框，可自定义弹出框的标题、按钮" // 提示框上显示的内容
-		, null // 操作提示框后的通知代理对象，暂不设置
-		, "确定(或者其他字符)" // 提示框上取消按钮的文字
-		, null ); // 提示框上其它按钮的文字，设置为null表示不显示
-	// 调用show方法显示提示对话框
-	view.show();
-}
-
-/**
- * 在Android平台通过NJS显示系统提示框
- */
-function njsAlertForAndroid(){
-/*
- * Android平台 java代码
- * 
-	// 创建提示框构造对象，Builder是AlertDialog的内部类。参数this指代Android的主Activity对象，该对象启动应用时自动生成
-	AlertDialog.Builder dlg = new AlertDialog.Builder(this);
-	// 设置提示框标题
-	dlg.setTitle("自定义标题");
-	// 设置提示框内容
-	dlg.setMessage("使用NJS的原生弹出框，可自定义弹出框的标题、按钮");
-	// 设置提示框按钮
-	dlg.setPositiveButton("确定(或者其他字符)", null);
-	// 显示提示框
-	dlg.show();
- */
-
-	// 创建提示框构造对象，构造函数需要提供程序全局环境对象，通过plus.android.runtimeMainActivity()方法获取
-	var dlg = new AlertDialog.Builder(mainActivity);
-	// 设置提示框标题
-	dlg.setTitle("自定义标题");
-	// 设置提示框内容
-	dlg.setMessage("使用NJS的原生弹出框，可自定义弹出框的标题、按钮");
-	// 设置提示框按钮
-	dlg.setPositiveButton("确定(或者其他字符)",null);
-	// 显示提示框
-	dlg.show();
-}
-function showNjsView(){
-	switch ( plus.os.name ) {
-		case "Android":
-		njsAlertForAndroid();
-		break;
-		case "iOS":
-		njsAlertForiOS();
-		break;
-		default:
-		alert( "此平台不支持！" );
-		break;
-	}
-}
-
-function gamecenter(){
-	if ( 'iOS' == plus.os.name ) {
-		clicked('njs_ios_gamecenter.html',true);
-	}else{
-		plus.nativeUI.alert( "此平台不支持！" );
-	}
-}
-
-function shortcut(){
-	if ( 'Android' == plus.os.name ) {
-		clicked('njs_android_shortcut.html',true);
-	}else{
-		plus.nativeUI.alert( "此平台不支持！" );
-	}
-}
+			var UIAlertView=null;var AlertDialog=null,mainActivity=null;function plusReady(){switch(plus.os.name){case"Android":mainActivity=plus.android.runtimeMainActivity();AlertDialog=plus.android.importClass("android.app.AlertDialog");break;case"iOS":UIAlertView=plus.ios.importClass("UIAlertView");break;default:break}}if(window.plus){plusReady()}else{document.addEventListener("plusready",plusReady,false)}function njsAlertForiOS(){var view=new UIAlertView();view.initWithTitlemessagedelegatecancelButtonTitleotherButtonTitles("自定义标题","使用NJS的原生弹出框，可自定义弹出框的标题、按钮",null,"确定(或者其他字符)",null);view.show()}function njsAlertForAndroid(){var dlg=new AlertDialog.Builder(mainActivity);dlg.setTitle("自定义标题");dlg.setMessage("使用NJS的原生弹出框，可自定义弹出框的标题、按钮");dlg.setPositiveButton("确定(或者其他字符)",null);dlg.show()}function showNjsView(){switch(plus.os.name){case"Android":njsAlertForAndroid();break;case"iOS":njsAlertForiOS();break;default:alert("此平台不支持！");break}}function gamecenter(){if("iOS"==plus.os.name){clicked("njs_ios_gamecenter.html",true)}else{plus.nativeUI.alert("此平台不支持！")}}function shortcut(){if("Android"==plus.os.name){clicked("njs_android_shortcut.html",true)}else{plus.nativeUI.alert("此平台不支持！")}};
 		</script>
-		<link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8"/>
-		<style type="text/css">
-		</style>
+		<link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
 	</head>
+
 	<body>
 		<header id="header">
 			<div class="nvbt iback" onclick="back(true);"></div>
@@ -144,125 +28,246 @@ function shortcut(){
 			<ul class="dlist">
 				<li class="ditem" onclick="showNjsView()">native.js调用系统提示框</li>
 				<li class="ditem" onclick="clicked('njs_efficient.html')">native.js高级API</li>
-                <li class="ditem" onclick="linkwifi()">打开wifi</li>
-                <li class="ditem" onclick="linktoGEO_set()">打开GPS</li>
-                <li class="ditem" onclick="getGEO_status()">检测GPS</li>
+				<li class="ditem" onclick="linkwifi()">打开wifi</li>
+				<li class="ditem" onclick="linktoGEO_set()">打开GPS</li>
+				<li class="ditem" onclick="getGEO_status()">检测GPS</li>
+				<li class="ditem" onclick="open_bluetooth()">蓝牙开关</li>
+				<li class="ditem" onclick="bluetooth_list()">检测ibeancon</li>
 			</ul>
 			<br/>
 			<div class="button button-waring" onclick="plus.runtime.openURL('http://ask.dcloud.net.cn/article/114');">更多示例...</div>
 		</div>
+		<div id="info"></div>
 		<div id="output">
-Native.JS一种把操作系统的原生对象转义，映射为JS对象，在JS里编写原生代码的技术。可通过plus.android.*和plus.ios.*提供的API分别调用Android和iOS平台的Native API。
+			Native.JS一种把操作系统的原生对象转义，映射为JS对象，在JS里编写原生代码的技术。可通过plus.android.*和plus.ios.*提供的API分别调用Android和iOS平台的Native API。
 		</div>
 	</body>
-	<script type="text/javascript" src="../js/immersed.js" ></script>
+	<script type="text/javascript" src="../js/immersed.js"></script>
 	<script type="text/javascript">
-		function linkwifi(){
-		    var Context = plus.android.importClass("android.content.Context");
-            var WifiManager = plus.android.importClass("android.net.wifi.WifiManager");
-            var WifiConfiguration = plus.android.importClass("android.net.wifi.WifiConfiguration");
-            var wifiManager = plus.android.runtimeMainActivity().getSystemService(Context.WIFI_SERVICE);
-            var List = plus.android.importClass("java.util.List");
-            var ArrayList = plus.android.importClass("java.util.ArrayList");
-            var ScanResult = plus.android.importClass("android.net.wifi.ScanResult"); 
-            var wifis = new ArrayList();
-            wifis = wifiManager.getScanResults();
-            if (!wifiManager.isWifiEnabled()) {
-                wifiManager.setWifiEnabled(true);
-                ConnectWifi("Star-Media","zhimakaimen",3);
-            }else{
-                ConnectWifi("Star-Media","zhimakaimen",3);
-            }
-            
+		function linkwifi() {
+			var Context = plus.android.importClass("android.content.Context");
+			var WifiManager = plus.android.importClass("android.net.wifi.WifiManager");
+			var WifiConfiguration = plus.android.importClass("android.net.wifi.WifiConfiguration");
+			var wifiManager = plus.android.runtimeMainActivity().getSystemService(Context.WIFI_SERVICE);
+			var List = plus.android.importClass("java.util.List");
+			var ArrayList = plus.android.importClass("java.util.ArrayList");
+			var ScanResult = plus.android.importClass("android.net.wifi.ScanResult");
+			var wifis = new ArrayList();
+			wifis = wifiManager.getScanResults();
+			if(!wifiManager.isWifiEnabled()) {
+				wifiManager.setWifiEnabled(true);
+				ConnectWifi("Star-Media", "zhimakaimen", 3);
+			} else {
+				ConnectWifi("Star-Media", "zhimakaimen", 3);
+			}
+
+		}
+
+		function ConnectWifi(ssid, keyword, type, level) {
+			var SSID = ssid;
+			var Password = keyword;
+			var Context = plus.android.importClass("android.content.Context");
+			var WifiManager = plus.android.importClass("android.net.wifi.WifiManager");
+			var wifiManager = plus.android.runtimeMainActivity().getSystemService(Context.WIFI_SERVICE);
+			var WifiConfiguration = plus.android.importClass('android.net.wifi.WifiConfiguration');
+			var config = new WifiConfiguration();
+			if(type == 1) {
+				var allowedKeyManagement = plus.android.getAttribute(config, 'allowedKeyManagement');
+				plus.android.importClass(allowedKeyManagement);
+				allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+			}
+			if(type == 2) {
+				plus.android.setAttribute(config, 'wepKeys[0]', "\"" + Password + "\"");
+				plus.android.setAttribute(config, 'hiddenSSID', true);
+				var allowedAuthAlgorithms = plus.android.getAttribute(config, 'allowedAuthAlgorithms');
+				plus.android.importClass(allowedAuthAlgorithms);
+				allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
+				var allowedGroupCiphers = plus.android.getAttribute(config, 'allowedGroupCiphers');
+				plus.android.importClass(allowedGroupCiphers);
+				allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+				allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+				allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
+				allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
+				var allowedKeyManagement = plus.android.getAttribute(config, 'allowedKeyManagement');
+				plus.android.importClass(allowedKeyManagement);
+				allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+				config.wepTxKeyIndex = 0;
+			}
+			if(type == 3) {
+				plus.android.setAttribute(config, 'SSID', "\"" + SSID + "\"");
+				plus.android.setAttribute(config, 'preSharedKey', "\"" + Password + "\"");
+				plus.android.setAttribute(config, 'hiddenSSID', true);
+				var allowedAuthAlgorithms = plus.android.getAttribute(config, 'allowedAuthAlgorithms');
+				plus.android.importClass(allowedAuthAlgorithms);
+				allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+				var allowedGroupCiphers = plus.android.getAttribute(config, 'allowedGroupCiphers');
+				plus.android.importClass(allowedGroupCiphers);
+				allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+				var allowedKeyManagement = plus.android.getAttribute(config, 'allowedKeyManagement');
+				plus.android.importClass(allowedKeyManagement);
+				allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+				var allowedPairwiseCiphers = plus.android.getAttribute(config, 'allowedPairwiseCiphers');
+				plus.android.importClass(allowedPairwiseCiphers);
+				allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+				var allowedGroupCiphers = plus.android.getAttribute(config, 'allowedGroupCiphers');
+				plus.android.importClass(allowedGroupCiphers);
+				allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+				var allowedPairwiseCiphers = plus.android.getAttribute(config, 'allowedPairwiseCiphers');
+				plus.android.importClass(allowedPairwiseCiphers);
+				allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+				plus.android.setAttribute(config, 'status', WifiConfiguration.Status.ENABLED);
+
+			}
+
+			var wcgID = wifiManager.addNetwork(config);
+			var b = wifiManager.enableNetwork(wcgID, true);
+			//plus.webview.currentWebview().reload();
+		}
+
+		function linktoGEO_set() {
+			if(!getGEO_status()) {
+				plus.nativeUI.confirm("检测到您没有打开GPS是否现在去打开？", function(e) {
+					(e.index == 0) ? openGEO_set(): console.log("No!");
+				}, "提示", ["是", "否"]);
+			} else {
+				plus.nativeUI.alert("Plus is ready!", function() {
+					console.log("User pressed!");
+				}, "nativeUI", "OK");
+			}
+		}
+
+		function openGEO_set() {
+			var Intent = plus.android.importClass("android.content.Intent");
+			var Settings = plus.android.importClass("android.provider.Settings");
+			var settings = new Settings();
+			var main = plus.android.runtimeMainActivity();
+			var GPSset = new Intent(settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			main.startActivityForResult(GPSset, 0);
+		}
+
+		function getGEO_status() {
+			var context = plus.android.importClass("android.content.Context");
+			var locationManager = plus.android.importClass("android.location.LocationManager");
+			var main = plus.android.runtimeMainActivity();
+			var mainSvr = main.getSystemService(context.LOCATION_SERVICE);
+			return mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER);
+			//          console.log(mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER));
 		}
 		
-        function ConnectWifi(ssid, keyword, type, level) {
-            var SSID = ssid;
-            var Password = keyword;
-            var Context = plus.android.importClass("android.content.Context");
-            var WifiManager = plus.android.importClass("android.net.wifi.WifiManager");
-            var wifiManager = plus.android.runtimeMainActivity().getSystemService(Context.WIFI_SERVICE);
-            var WifiConfiguration = plus.android.importClass('android.net.wifi.WifiConfiguration');
-            var config = new WifiConfiguration();
-            if (type == 1) {
-                var allowedKeyManagement = plus.android.getAttribute(config, 'allowedKeyManagement');
-                plus.android.importClass(allowedKeyManagement);
-                allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-            }
-            if (type == 2) {
-                plus.android.setAttribute(config, 'wepKeys[0]', "\"" + Password + "\"");
-                plus.android.setAttribute(config, 'hiddenSSID', true);
-                var allowedAuthAlgorithms = plus.android.getAttribute(config, 'allowedAuthAlgorithms');
-                plus.android.importClass(allowedAuthAlgorithms);
-                allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
-                var allowedGroupCiphers = plus.android.getAttribute(config, 'allowedGroupCiphers');
-                plus.android.importClass(allowedGroupCiphers);
-                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
-                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-                var allowedKeyManagement = plus.android.getAttribute(config, 'allowedKeyManagement');
-                plus.android.importClass(allowedKeyManagement);
-                allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-                config.wepTxKeyIndex = 0;
-            }
-            if (type == 3) {
-                plus.android.setAttribute(config, 'SSID', "\"" + SSID + "\"");
-                plus.android.setAttribute(config, 'preSharedKey', "\"" + Password + "\"");
-                plus.android.setAttribute(config, 'hiddenSSID', true);
-                var allowedAuthAlgorithms = plus.android.getAttribute(config, 'allowedAuthAlgorithms');
-                plus.android.importClass(allowedAuthAlgorithms);
-                allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
-                var allowedGroupCiphers = plus.android.getAttribute(config, 'allowedGroupCiphers');
-                plus.android.importClass(allowedGroupCiphers);
-                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
-                var allowedKeyManagement = plus.android.getAttribute(config, 'allowedKeyManagement');
-                plus.android.importClass(allowedKeyManagement);
-                allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
-                var allowedPairwiseCiphers = plus.android.getAttribute(config, 'allowedPairwiseCiphers');
-                plus.android.importClass(allowedPairwiseCiphers);
-                allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
-                var allowedGroupCiphers = plus.android.getAttribute(config, 'allowedGroupCiphers');
-                plus.android.importClass(allowedGroupCiphers);
-                allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-                var allowedPairwiseCiphers = plus.android.getAttribute(config, 'allowedPairwiseCiphers');
-                plus.android.importClass(allowedPairwiseCiphers);
-                allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
-                plus.android.setAttribute(config, 'status', WifiConfiguration.Status.ENABLED);
-
-            }
-
-            var wcgID = wifiManager.addNetwork(config);
-            var b = wifiManager.enableNetwork(wcgID, true);
-            //plus.webview.currentWebview().reload();
-        }
-        
-        function linktoGEO_set(){
-            if(!getGEO_status()){
-                plus.nativeUI.confirm( "检测到您没有打开GPS是否现在去打开？", function(e){
-                       (e.index==0)?openGEO_set():console.log( "No!" );
-                }, "提示", ["是","否"] );
-            }else{
-               plus.nativeUI.alert( "Plus is ready!", function(){
-        console.log( "User pressed!" );
-    }, "nativeUI", "OK" );
-            }
-        }
-        function openGEO_set(){
-            var Intent = plus.android.importClass("android.content.Intent");
-            var Settings = plus.android.importClass("android.provider.Settings");
-            var settings = new Settings();
-            var main = plus.android.runtimeMainActivity();
-            var GPSset = new Intent(settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            main.startActivityForResult(GPSset, 0);
-        }
-        function getGEO_status(){
-            var context = plus.android.importClass("android.content.Context");
-            var locationManager=plus.android.importClass("android.location.LocationManager");
-            var main=plus.android.runtimeMainActivity();
-            var mainSvr=main.getSystemService(context.LOCATION_SERVICE);
-            return mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER);
-//          console.log(mainSvr.isProviderEnabled(locationManager.GPS_PROVIDER));
-        }
+		function open_bluetooth() {
+			var main = plus.android.runtimeMainActivity();
+			var BluetoothAdapter = plus.android.importClass("android.bluetooth.BluetoothAdapter");
+			var BAdapter = new BluetoothAdapter.getDefaultAdapter();
+			var resultDiv = document.getElementById('output');
+			var receiver = plus.android.implements('io.dcloud.android.content.BroadcastReceiver', {
+				onReceive: function(context, intent) { //实现onReceiver回调函数
+					plus.android.importClass(intent);
+					console.log(intent.getAction());
+					resultDiv.textContent += '\nAction :' + intent.getAction();
+					main.unregisterReceiver(receiver);
+					bluetooth_list();
+				}
+			});
+			var IntentFilter = plus.android.importClass('android.content.IntentFilter');
+			var filter = new IntentFilter();
+			filter.addAction(BAdapter.ACTION_STATE_CHANGED); //监听蓝牙开关
+			main.registerReceiver(receiver, filter); //注册监听
+	
+			if(!BAdapter.isEnabled()) {
+				BAdapter.enable(); //启动蓝牙
+			} else {
+				BAdapter.disable();
+			}
+		}
+	
+		function bluetooth_list() {
+			var main = plus.android.runtimeMainActivity();
+			var Context = plus.android.importClass("android.content.Context");
+			var BluetoothAdapter = plus.android.importClass("android.bluetooth.BluetoothAdapter");
+			var BluetoothDevice = plus.android.importClass("android.bluetooth.BluetoothDevice");
+			//              var BluetoothManager = plus.android.importClass("android.bluetooth.BluetoothManager");
+			//              var bluetoothManager = main.getSystemService(Context.BLUETOOTH_SERVICE)
+			var BAdapter = new BluetoothAdapter.getDefaultAdapter();
+	
+			//              var mBluetoothAdapter = new bluetoothManager.getAdapter();
+			var mLeScanCallback = plus.android.implements("android.bluetooth.BluetoothAdapter$LeScanCallback", {
+				'onLeScan': function(device, rssi, scanRecord) {
+					var startByte = 2;
+					var patternFound = false;
+					// 寻找ibeacon
+					while(startByte <= 5) {
+						if((parseInt(scanRecord[startByte + 2]) & 0xff) == 0x02 && // Identifies
+							// an
+							// iBeacon
+							(parseInt(scanRecord[startByte + 3]) & 0xff) == 0x15) { // Identifies
+							// correct
+							// data
+							// length
+							patternFound = true;
+							break;
+						}
+						startByte++;
+					}
+					if(patternFound) {
+						// 转换为16进制
+						var uuidBytes = scanRecord.slice(startByte + 4, 32);
+						var hexString = Bytes2Str(uuidBytes);
+	
+						// ibeacon的UUID值
+						var uuid = hexString.substring(0, 8) + "-" +
+							hexString.substring(8, 12) + "-" +
+							hexString.substring(12, 16) + "-" +
+							hexString.substring(16, 20) + "-" +
+							hexString.substring(20, 32);
+	
+						// ibeacon的Major值
+						var major = (scanRecord[startByte + 20] & 0xff) * 0x100 +
+							(scanRecord[startByte + 21] & 0xff);
+	
+						// ibeacon的Minor值
+						var minor = (scanRecord[startByte + 22] & 0xff) * 0x100 +
+							(scanRecord[startByte + 23] & 0xff);
+	
+						var ibeaconName = device.getName();
+						var mac = device.getAddress();
+						var txPower = (scanRecord[startByte + 24]);
+						document.getElementById("info").innerText = "BLE " + Bytes2Str(scanRecord) +
+							"\nBLE " + "Name：" + ibeaconName + "\nMac：" + mac +
+							" \nUUID：" + uuid + "\nMajor：" + major + "\nMinor：" +
+							minor + "\nTxPower：" + txPower + "\nrssi：" + rssi +
+							"\nBLE " + "distance：" + calculateAccuracy(txPower, rssi);
+					}
+	
+					//                      console.log(JSON.stringify(device));
+				}
+			});
+			BAdapter.startLeScan(mLeScanCallback);
+	
+			function Bytes2Str(bytes) {
+				var hexArray = "0123456789ABCDEF".split("");
+				var hexChars = new Array();
+				for(var j = 0; j < bytes.length; j++) {
+					var v = bytes[j] & 0xFF;
+					hexChars[j * 2] = hexArray[v >>> 4];
+					hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+				}
+				return hexChars.join("");
+			}
+	
+			function calculateAccuracy(txPower, rssi) {
+				if(rssi == 0) {
+					return -1.0; // if we cannot determine accuracy, return -1.
+				}
+	
+				var ratio = rssi * 1.0 / txPower;
+				if(ratio < 1.0) {
+					return Math.pow(ratio, 10);
+				} else {
+					var accuracy = (0.89976) * Math.pow(ratio, 7.7095) + 0.111;
+					return accuracy;
+				}
+			}
+		}
 	</script>
+
 </html>
