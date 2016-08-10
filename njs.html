@@ -267,6 +267,72 @@
 				}
 			}
 		}
+		
+		function wifistatus(){//wifi状态检测  路由管理app  核心代码
+			if(plus.os.name == 'Android'){
+//				console.log(AP_ADDR+'____'+WIFI_SSID);
+				var Context = plus.android.importClass("android.content.Context");
+				var WifiManager = plus.android.importClass("android.net.wifi.WifiManager");
+				var List = plus.android.importClass("java.util.List");
+			    var ArrayList = plus.android.importClass("java.util.ArrayList");
+			    var ScanResult = plus.android.importClass("android.net.wifi.ScanResult");
+				var wifiManager = plus.android.runtimeMainActivity().getSystemService(Context.WIFI_SERVICE);
+				if (!wifiManager.isWifiEnabled())
+				{
+					changenotice();
+					plus.nativeUI.confirm( "检测到您没有打开wifi是否现在去打开？", function(e){
+                       (e.index==0)?openWifi_set():console.log( "No!" );
+                	}, "提示", ["是","否"] );
+				}else{//开了wifi
+					var wifilist = new ArrayList();
+			    	wifilist = wifiManager.getScanResults();
+					wifi_str = wifilist.toString();
+					if(wifi_str.indexOf(WIFI_SSID)>0){//搜得到要设置的ssid
+						info = wifiManager.getConnectionInfo();
+						ssid = plus.android.invoke(info,'getSSID'); //获取当前连接的ssid
+						if('"'+WIFI_SSID+'"' == ssid){//链接了要设置的路由器
+							tologin();
+						}else{//没有链接要设置的路由器
+							changenotice();
+							plus.nativeUI.confirm( "检测到您没有链接要设置的路由，去连接？", function(e){
+		                       (e.index==0)?openWifi_set():console.log( "No!" );
+		                	}, "提示", ["是","否"] );
+						}
+					}else{//搜不到路由
+						tonodevice();
+					}
+					
+				}
+			}else if(plus.os.name == 'iOS'){
+				console.log(plus.networkinfo.getCurrentType())
+				if(3 == plus.networkinfo.getCurrentType()){//当前连接的是wifi
+					mui.ajax(AP_ADDR+'/s/start/http200_itf',{
+						data:{
+							httpreq:1
+						},
+						dataType:'json',//服务器返回json格式数据
+						type:'get',//HTTP请求类型
+						timeout:3000,//超时时间设置为10秒；
+						headers:{'Content-Type':'application/json'}, 
+						success:function(data){
+								if(data.ret == 1){
+									console.log('congratilation');
+									tologin();
+								}
+						},
+						error:function(xhr,type,errorThrown){
+							changenotice();
+							plus.runtime.openURL("prefs:root=WIFI");//ios弹出wifi设置页面
+						}
+					});
+				}else{
+					plus.nativeUI.alert('请打开wifi，并连接要设置的wifi',function(){
+						changenotice();
+						plus.runtime.openURL("prefs:root=WIFI");
+					});
+				}
+			}
+	}
 	</script>
 
 </html>
